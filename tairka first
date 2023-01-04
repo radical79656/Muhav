@@ -1,0 +1,104 @@
+second_win = QWidget()#второе окно начало
+second_win.hide()
+
+btn1_2 = QPushButton('Загрязнение воздуха')
+btn2_2 = QPushButton('загрязнение водной среды')
+btn3_2 = QPushButton('загрязнение природы')
+
+main_layout_2 = QVBoxLayout()
+layout1_2 = QHBoxLayout()
+layout2_2 = QHBoxLayout()
+
+second_win.setLayout(main_layout_2)
+main_layout_2.addLayout(layout1_2)
+main_layout_2.addLayout(layout2_2)
+layout1_2.addWidget(btn1_2)
+layout1_2.addWidget(btn2_2)
+layout2_2.addWidget(btn3_2)#второе окно конец
+
+
+second_first_win = QWidget()#первое окно во втором окне начало
+second_first_win.hide()
+
+
+main_layout_2_1 = QVBoxLayout()
+layout1_2_1 = QHBoxLayout()
+layout2_2_1 = QHBoxLayout()
+
+btn1_2_1 = QPushButton('заводы')
+btn2_2_1 = QPushButton('отходы')
+btn3_2_1 = QPushButton('транспорт')
+btn4_2_1 = QPushButton('электричество')
+
+second_first_win.setLayout(main_layout_2_1)
+main_layout_2_1.addLayout(layout1_2_1)
+main_layout_2_1.addLayout(layout2_2_1)
+layout1_2_1.addWidget(btn1_2_1)
+layout1_2_1.addWidget(btn2_2_1)
+layout2_2_1.addWidget(btn3_2_1)
+layout2_2_1.addWidget(btn4_2_1)#первое окно во втором окне конец
+
+
+second_second_win = QWidget()#второе окно во втором окне начало
+second_second_win.hide()
+
+main_layout_2_2 = QVBoxLayout()
+layout1_2_2 = QHBoxLayout()
+layout2_2_2 = QHBoxLayout()
+
+btn1_2_2 = QPushButton('корабли')
+btn2_2_2 = QPushButton('нефть')
+btn3_2_2 = QPushButton('отходы')
+
+
+second_second_win.setLayout(main_layout_2_2)
+main_layout_2_2.addLayout(layout1_2_2)
+main_layout_2_2.addLayout(layout2_2_2)
+layout1_2_2.addWidget(btn1_2_2)
+layout1_2_2.addWidget(btn2_2_2)
+layout2_2_2.addWidget(btn3_2_2)#второе окно во втором окне конец
+
+
+second_third_win = QWidget()#третье окно во втором окне начало
+second_third_win.hide()
+
+main_layout_2_3 = QVBoxLayout()
+layout1_2_3 = QHBoxLayout()
+layout2_2_3 = QHBoxLayout()
+
+btn1_2_3 = QPushButton('корабли')
+btn2_2_3 = QPushButton('нефть')
+btn3_2_3 = QPushButton('отходы')
+
+
+second_third_win.setLayout(main_layout_2_3)
+main_layout_2_3.addLayout(layout1_2_3)
+main_layout_2_3.addLayout(layout2_2_3)
+layout1_2_3.addWidget(btn1_2_3)
+layout1_2_3.addWidget(btn2_2_3)
+layout2_2_3.addWidget(btn3_2_3)#третье окно во втором окне конец
+
+
+def second_show():
+    second_win.show()
+    win.hide()
+
+def second_first_show():
+    second_first_win.show()
+    second_win.hide()
+
+def second_second_show():
+    second_second_win.show()
+    second_win.hide()
+
+def second_third_show():
+    second_third_win.show()
+    second_win.hide()
+
+btn_info.clicked.connect(second_show)
+
+btn1_2.clicked.connect(second_first_show)
+
+btn2_2.clicked.connect(second_second_show)
+
+btn3_2.clicked.connect(second_third_show)
