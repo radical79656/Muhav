@@ -1,0 +1,394 @@
+from PyQt5.QtCore import Qt
+from random import shuffle
+from random import randint
+from PyQt5.QtGui import QPixmap,QIcon
+from PyQt5.QtWidgets import (
+    QApplication, QWidget,
+    QHBoxLayout, QVBoxLayout,
+    QGroupBox, QButtonGroup, QRadioButton,
+    QPushButton, QLabel)
+
+app = QApplication([]) 
+win = QWidget()
+win.resize(400, 300)
+win.setStyleSheet(
+    'background-color:#9bd1fa;'
+    'color: black;'
+    )
+ 
+pixmap = QPixmap("logo.png") 
+avtori = QPixmap("avtori.png") 
+lbl_2 = QLabel() 
+lbl_2.setPixmap(avtori) 
+lbl = QLabel() 
+lbl.setPixmap(pixmap) 
+ 
+win.setWindowIcon(QIcon('logo.png')) 
+ 
+main_layout = QVBoxLayout() 
+main_layout.addWidget(lbl) 
+win.setLayout(main_layout) 
+ 
+btn_l = QHBoxLayout() 
+btn_l2 = QHBoxLayout() 
+ 
+btn_info=QPushButton('Новости') 
+btn_reg=QPushButton('Регистрация') 
+btn_autors=QPushButton('Авторы)') 
+btn_test=QPushButton('Викторина') 
+ 
+btn_l.addWidget(btn_info) 
+btn_l.addWidget(btn_reg) 
+btn_l2.addWidget(btn_autors) 
+btn_l2.addWidget(btn_test) 
+ 
+main_layout.addLayout(btn_l) 
+main_layout.addLayout(btn_l2) 
+ 
+#===Test===
+class Question():
+    def __init__(self, question, right_answer, wrong1, wrong2, wrong3):
+        self.question = question
+        self.right_answer = right_answer
+        self.wrong1 = wrong1
+        self.wrong2 = wrong2
+        self.wrong3 = wrong3
+        
+
+label = QLabel()
+pixmap = QPixmap('super car2.png')
+label.setPixmap(pixmap)
+btn_OK = QPushButton('Ответить')
+btn_OK.setStyleSheet(
+    'width: 70px;'
+    'height: 30px;'
+    'front-size: 20px;'
+    'background-color: #1cb317;'
+    'border: 2px solid white;'
+    'color: white;'
+    )
+
+lb_Question = QLabel('Самый сложный вопрос в мире!')
+
+RadioGroupBox = QGroupBox("Варианты ответов")
+
+rbtn_1 = QRadioButton('Вариант 1')
+rbtn_2 = QRadioButton('Вариант 2')
+rbtn_3 = QRadioButton('Вариант 3')
+rbtn_4 = QRadioButton('Вариант 4')
+
+RadioGroup = QButtonGroup()
+RadioGroup.addButton(rbtn_1)
+RadioGroup.addButton(rbtn_2)
+RadioGroup.addButton(rbtn_3)
+RadioGroup.addButton(rbtn_4)
+
+
+layout_ans1 = QHBoxLayout()
+layout_ans2 = QVBoxLayout()
+layout_ans3 = QVBoxLayout()
+layout_ans2.addWidget(rbtn_1)
+layout_ans2.addWidget(rbtn_2)
+layout_ans3.addWidget(rbtn_3)
+layout_ans3.addWidget(rbtn_4)
+
+layout_ans1.addLayout(layout_ans2)
+layout_ans1.addLayout(layout_ans3)
+
+RadioGroupBox.setLayout(layout_ans1)
+
+AnsGroupBox = QGroupBox("Результат теста")
+lb_Result = QLabel('прав ты или нет?')
+lb_Correct = QLabel('ответ будет тут!')
+layout_res = QVBoxLayout()
+layout_res.addWidget(lb_Result, alignment=(Qt.AlignLeft | Qt.AlignTop))
+layout_res.addWidget(lb_Correct, alignment=Qt.AlignHCenter, stretch=2)
+AnsGroupBox.setLayout(layout_res)
+
+layout_line1 = QHBoxLayout()
+layout_line2 = QHBoxLayout()
+layout_line3 = QHBoxLayout()
+
+layout_line1.addWidget(label, alignment=(Qt.AlignLeft | Qt.AlignTop))
+layout_line1.addWidget(lb_Question, alignment=(Qt.AlignHCenter | Qt.AlignVCenter))
+layout_line2.addWidget(RadioGroupBox)
+layout_line2.addWidget(AnsGroupBox)
+AnsGroupBox.hide()
+
+layout_line3.addStretch(1)
+layout_line3.addWidget(btn_OK, stretch=2)  # кнопка должна быть большой
+layout_line3.addStretch(1)
+layout_card = QVBoxLayout()
+
+layout_card.addLayout(layout_line1, stretch=2)
+layout_card.addLayout(layout_line2, stretch=8)
+layout_card.addStretch(1)
+layout_card.addLayout(layout_line3, stretch=1)
+layout_card.addStretch(1)
+layout_card.setSpacing(5)  
+
+def show_result():
+    RadioGroupBox.hide()
+    AnsGroupBox.show()
+    btn_OK.setText('Следующий вопрос')
+
+def show_question():
+    RadioGroupBox.show()    
+    AnsGroupBox.hide()
+    btn_OK.setText('Ответить')
+    RadioGroup.setExclusive(False)
+    rbtn_1.setChecked(False)
+    rbtn_2.setChecked(False)
+    rbtn_3.setChecked(False)
+    rbtn_4.setChecked(False)
+    RadioGroup.setExclusive(True)
+    
+answers = [rbtn_1, rbtn_2, rbtn_3, rbtn_4]
+
+def ask(q):
+    shuffle(answers)
+    answers[0].setText(q.right_answer)
+    answers[1].setText(q.wrong1)
+    answers[2].setText(q.wrong2)
+    answers[3].setText(q.wrong3)
+    lb_Question.setText(q.question)
+    lb_Correct.setText(q.right_answer)
+    show_question()
+
+
+def test():
+    if 'Ответить' == btn_OK.text():
+        show_result()
+    else:
+        show_question()
+
+question_list = []
+question_list.append(Question('Как называется активная оболочка Земли, которая населена живыми организмами?', 'Биосфера', 'Литосфера ', 'Геосфера', 'Гидросфера'))
+question_list.append(Question('Кто предложил термин «экология»?', 'Э.Геккель', 'Аристотель', ' Ч.Дарвин', ' В.И.Вернадский'))
+question_list.append(Question('Все факторы живой и неживой природы, воздействующие на особи, популяции, виды, называют?', 'экологическими', 'биотическими', 'абиотическими', 'антропогенными'))
+question_list.append(Question('Понятие «биогеоценоз» ввел?', 'В.Сукачев', 'B.Вернадский', 'Аристотель', 'B.Докучаев'))
+question_list.append(Question('Минерализуют органические вещества других организмов?', 'редуценты', 'консументы 1-го порядка', 'консументы 2-го порядка', 'продуценты'))
+question_list.append(Question('Понятие «экосистема» вел в экологию?', ' А.Тенсли', 'Э.Зюсс', 'В.Сукачев', 'В.Вернадский'))
+question_list.append(Question('Изменения во внешней среде приводят к различным изменениям в популяции, но не влияют?', 'смертность особей которых очень велика', 'хорошо обеспеченными пищевыми ресурсами', 'которые занимают обширный ареал', 'потомство которых проходит стадию личинки'))
+question_list.append(Question('Какие существуют виды адаптации организмов?', 'Морфологические, этологические, физиологические', 'Правовые свойства организмов', 'Только морфологические виды', 'Только физиологические виды'))
+question_list.append(Question('Какая наука изучает характер и поведение животных?', 'Этология', 'Биология', 'Зоология', 'Экология'))
+
+def check_answer():
+    if answers[0].isChecked():
+        show_correct('Правильно')
+        window.score += 1
+        print('Статистика\n-Всего вопросов: ', window.total, '\n-Правильных ответов: ', window.score)
+        print('Рейтинг:', (window.score / window.total * 100), '%')
+    else:
+        if answers[1].isChecked() or answers[2].isChecked() or answers[3].isChecked():
+            show_correct('Неверно! Правильный ответ:')
+
+def next_question():
+    window.total += 1
+    print('Статистика\n-Всего вопросов: ', window.total, '\n-Правильных ответов: ', window.score)
+    cur_question = randint(0, len(question_list) - 1)
+
+    q = question_list[cur_question]
+    ask(q)
+
+def click_ok():
+    if btn_OK.text() == 'Ответить':
+        check_answer()
+    else:
+        next_question()
+
+def show_correct(res):
+    lb_Result.setText(res)
+    show_result()
+
+window = QWidget()
+window.setLayout(layout_card)
+window.setWindowTitle('Викторина')
+
+btn_OK.clicked.connect(click_ok)
+
+window.score = 0
+window.total = 0
+
+next_question()
+window.resize(400, 300)
+window.setStyleSheet(
+    'background-color:#9bd1fa;'
+    'color: black;'
+    )
+ 
+#===Test(end)===
+
+#===Novosti===
+second_win = QWidget()#второе окно начало
+second_win.resize(400, 300)
+second_win.setStyleSheet(
+    'background-color:#9bd1fa;'
+    'color: black;'
+    )
+second_win.hide()
+
+btn1_2 = QPushButton('Загрязнение воздуха')
+btn2_2 = QPushButton('загрязнение водной среды')
+btn3_2 = QPushButton('загрязнение природы')
+
+main_layout_2 = QVBoxLayout()
+layout1_2 = QHBoxLayout()
+layout2_2 = QHBoxLayout()
+
+second_win.setLayout(main_layout_2)
+main_layout_2.addLayout(layout1_2)
+main_layout_2.addLayout(layout2_2)
+layout1_2.addWidget(btn1_2)
+layout1_2.addWidget(btn2_2)
+layout2_2.addWidget(btn3_2)#второе окно конец
+
+
+second_first_win = QWidget()#первое окно во втором окне начало
+second_first_win.resize(400, 300)
+second_first_win.setStyleSheet(
+    'background-color:#9bd1fa;'
+    'color: black;'
+    )
+second_first_win.hide()
+
+
+main_layout_2_1 = QVBoxLayout()
+layout1_2_1 = QHBoxLayout()
+layout2_2_1 = QHBoxLayout()
+
+btn1_2_1 = QPushButton('заводы')
+btn2_2_1 = QPushButton('отходы')
+btn3_2_1 = QPushButton('транспорт')
+btn4_2_1 = QPushButton('электричество')
+
+second_first_win.setLayout(main_layout_2_1)
+
+main_layout_2_1.addLayout(layout1_2_1)
+main_layout_2_1.addLayout(layout2_2_1)
+layout1_2_1.addWidget(btn1_2_1)
+layout1_2_1.addWidget(btn2_2_1)
+layout2_2_1.addWidget(btn3_2_1)
+layout2_2_1.addWidget(btn4_2_1)#первое окно во втором окне конец
+
+
+second_second_win = QWidget()#второе окно во втором окне начало
+second_second_win.resize(400, 300)
+second_second_win.setStyleSheet(
+    'background-color:#9bd1fa;'
+    'color: black;'
+    )
+second_second_win.hide()
+
+main_layout_2_2 = QVBoxLayout()
+layout1_2_2 = QHBoxLayout()
+layout2_2_2 = QHBoxLayout()
+
+btn1_2_2 = QPushButton('корабли')
+btn2_2_2 = QPushButton('нефть')
+btn3_2_2 = QPushButton('отходы')
+
+
+second_second_win.setLayout(main_layout_2_2)
+main_layout_2_2.addLayout(layout1_2_2)
+main_layout_2_2.addLayout(layout2_2_2)
+layout1_2_2.addWidget(btn1_2_2)
+layout1_2_2.addWidget(btn2_2_2)
+layout2_2_2.addWidget(btn3_2_2)#второе окно во втором окне конец
+
+
+second_third_win = QWidget()
+second_third_win.resize(400, 300)
+second_third_win.setStyleSheet(
+    'background-color:#9bd1fa;'
+    'color: black;'
+    )
+second_third_win.hide()
+
+main_layout_2_3 = QVBoxLayout()
+layout1_2_3 = QHBoxLayout()
+layout2_2_3 = QHBoxLayout()
+
+btn1_2_3 = QPushButton('корабли')
+btn2_2_3 = QPushButton('нефть')
+btn3_2_3 = QPushButton('отходы')
+
+
+second_third_win.setLayout(main_layout_2_3)
+main_layout_2_3.addLayout(layout1_2_3)
+main_layout_2_3.addLayout(layout2_2_3)
+layout1_2_3.addWidget(btn1_2_3)
+layout1_2_3.addWidget(btn2_2_3)
+layout2_2_3.addWidget(btn3_2_3)#третье окно во втором окне конец
+
+
+def second_show():
+    second_win.show()
+    win.hide()
+
+def second_hide():
+    second_win.hide()
+    win.hide()
+
+def second_first_show():
+    second_first_win.show()
+    second_win.hide()
+
+def second_first_hide():
+    second_first_win.hide()
+    second_win.show()
+
+def second_second_show():
+    second_second_win.show()
+    second_win.hide()
+
+def second_second_hide():
+    second_second_win.hide()
+    second_win.show()
+
+def second_third_show():
+    second_third_win.show()
+    second_win.hide()
+
+def second_third_hide():
+    second_third_win.hide()
+    second_win.show()
+
+btn_info.clicked.connect(second_show)
+
+btn1_2.clicked.connect(second_first_show)
+
+btn2_2.clicked.connect(second_second_show)
+
+btn3_2.clicked.connect(second_third_show)
+#===Novosti(end)===
+
+#===Autors===
+win_1 = QWidget()
+win_1.resize(400, 300)
+win_1.setStyleSheet(
+    'background-color:#9bd1fa;'
+    'color: black;'
+    )
+btn_donate=QPushButton('Поддержать авторов(на покушать) ;)') 
+
+v_layout = QVBoxLayout() 
+v_layout.addWidget(lbl_2) 
+v_layout.addWidget(btn_donate) 
+win_1.setLayout(v_layout) 
+
+
+#===Autors(end)===
+
+def change_win_test(): 
+    win.hide() 
+    window.show() 
+ 
+def change_win_autors(): 
+    win.hide() 
+    win_1.show() 
+
+win.show() 
+btn_test.clicked.connect(change_win_test) 
+btn_autors.clicked.connect(change_win_autors) 
+app.exec_()
