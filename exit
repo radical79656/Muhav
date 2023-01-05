@@ -1,0 +1,21 @@
+class Exit_btn(QPushButton):
+    def __init__(self,main_win,target_win,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.target_win = target_win
+        self.main_win = main_win
+    def change(self):
+        self.main_win.hide()
+        self.target_win.show()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+exit_authors = Exit_btn(win_1,win)
+exit_authors.setText('Назад')
+v_layout.addWidget(exit_authors)
+exit_authors.clicked.connect(exit_authors.change)
