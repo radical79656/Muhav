@@ -1,0 +1,850 @@
+from PyQt5.QtCore import Qt
+from random import shuffle
+from random import randint
+from PyQt5.QtGui import QPixmap,QIcon
+from PyQt5.QtWidgets import (
+    QApplication, QWidget,
+    QHBoxLayout, QVBoxLayout,
+    QGroupBox, QButtonGroup, QRadioButton,
+    QPushButton, QLabel,QMessageBox,QSpinBox)
+
+
+class Exit_btn(QPushButton):
+    def __init__(self,main_win,target_win,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        self.target_win = target_win
+        self.main_win = main_win
+    def change(self):
+        self.main_win.hide()
+        self.target_win.show()
+
+app = QApplication([]) 
+win = QWidget()
+win.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+win.resize(400,300)
+ 
+
+pixmap = QPixmap("log.png") 
+lbl_pix = QLabel() 
+lbl_pix.setPixmap(pixmap) 
+
+win.setWindowIcon(QIcon('logo.png')) 
+ 
+main_layout = QVBoxLayout() 
+main_layout.addWidget(lbl_pix,alignment=Qt.AlignCenter) 
+win.setLayout(main_layout) 
+ 
+btn_l = QHBoxLayout() 
+btn_l2 = QHBoxLayout() 
+ 
+btn_info=QPushButton('Новости') 
+btn_reg=QPushButton('Регистрация') 
+btn_autors=QPushButton('Авторы') 
+btn_test=QPushButton('Викторина') 
+ 
+btn_l.addWidget(btn_info) 
+btn_l.addWidget(btn_reg) 
+btn_l2.addWidget(btn_autors) 
+btn_l2.addWidget(btn_test) 
+ 
+main_layout.addLayout(btn_l) 
+main_layout.addLayout(btn_l2) 
+#===Test===
+class Question():
+    def __init__(self, question, right_answer, wrong1, wrong2, wrong3):
+        self.question = question
+        self.right_answer = right_answer
+        self.wrong1 = wrong1
+        self.wrong2 = wrong2
+        self.wrong3 = wrong3
+        
+
+label = QLabel()
+pixmap = QPixmap('super car2.png')
+label.setPixmap(pixmap)
+btn_OK = QPushButton('Ответить')
+btn_OK.setStyleSheet(
+    'width: 70px;'
+    'height: 30px;'
+    'front-size: 20px;'
+    'background-color: #1cb317;'
+    'border: 2px solid white;'
+    'color: white;'
+    )
+
+lb_Question = QLabel('Самый сложный вопрос в мире!')
+
+RadioGroupBox = QGroupBox("Варианты ответов")
+
+rbtn_1 = QRadioButton('Вариант 1')
+rbtn_2 = QRadioButton('Вариант 2')
+rbtn_3 = QRadioButton('Вариант 3')
+rbtn_4 = QRadioButton('Вариант 4')
+
+RadioGroup = QButtonGroup()
+RadioGroup.addButton(rbtn_1)
+RadioGroup.addButton(rbtn_2)
+RadioGroup.addButton(rbtn_3)
+RadioGroup.addButton(rbtn_4)
+
+layout_ans1 = QHBoxLayout()
+layout_ans2 = QVBoxLayout()
+layout_ans3 = QVBoxLayout()
+layout_ans2.addWidget(rbtn_1)
+layout_ans2.addWidget(rbtn_2)
+layout_ans3.addWidget(rbtn_3)
+layout_ans3.addWidget(rbtn_4)
+
+layout_ans1.addLayout(layout_ans2)
+layout_ans1.addLayout(layout_ans3)
+
+RadioGroupBox.setLayout(layout_ans1)
+
+AnsGroupBox = QGroupBox("Результат теста")
+lb_Result = QLabel('прав ты или нет?')
+lb_Correct = QLabel('ответ будет тут!')
+layout_res = QVBoxLayout()
+layout_res.addWidget(lb_Result, alignment=(Qt.AlignLeft | Qt.AlignTop))
+layout_res.addWidget(lb_Correct, alignment=Qt.AlignHCenter, stretch=2)
+AnsGroupBox.setLayout(layout_res)
+
+layout_line1 = QHBoxLayout()
+layout_line2 = QHBoxLayout()
+layout_line3 = QHBoxLayout()
+
+layout_line1.addWidget(label, alignment=(Qt.AlignLeft | Qt.AlignTop))
+layout_line1.addWidget(lb_Question, alignment=(Qt.AlignHCenter | Qt.AlignVCenter))
+layout_line2.addWidget(RadioGroupBox)
+layout_line2.addWidget(AnsGroupBox)
+AnsGroupBox.hide()
+
+layout_line3.addStretch(1)
+layout_line3.addWidget(btn_OK, stretch=2)  # кнопка должна быть большой
+layout_line3.addStretch(1)
+layout_card = QVBoxLayout()
+
+layout_card.addLayout(layout_line1, stretch=2)
+layout_card.addLayout(layout_line2, stretch=8)
+layout_card.addStretch(1)
+layout_card.addLayout(layout_line3, stretch=1)
+layout_card.addStretch(1)
+layout_card.setSpacing(5)  
+
+def show_result():
+    RadioGroupBox.hide()
+    AnsGroupBox.show()
+    btn_OK.setText('Следующий вопрос')
+
+def show_question():
+    RadioGroupBox.show()    
+    AnsGroupBox.hide()
+    btn_OK.setText('Ответить')
+    RadioGroup.setExclusive(False)
+    rbtn_1.setChecked(False)
+    rbtn_2.setChecked(False)
+    rbtn_3.setChecked(False)
+    rbtn_4.setChecked(False)
+    RadioGroup.setExclusive(True)
+    
+answers = [rbtn_1, rbtn_2, rbtn_3, rbtn_4]
+
+def ask(q):
+    shuffle(answers)
+    answers[0].setText(q.right_answer)
+    answers[1].setText(q.wrong1)
+    answers[2].setText(q.wrong2)
+    answers[3].setText(q.wrong3)
+    lb_Question.setText(q.question)
+    lb_Correct.setText(q.right_answer)
+    show_question()
+
+
+def test():
+    if 'Ответить' == btn_OK.text():
+        show_result()
+    else:
+        show_question()
+
+question_list = []
+question_list.append(Question('Как называется активная оболочка Земли, которая населена живыми организмами?', 'Биосфера', 'Литосфера ', 'Геосфера', 'Гидросфера'))
+question_list.append(Question('Как называется активная оболочка Земли, которая населена живыми организмами?', 'Биосфера', 'Литосфера ', 'Геосфера', 'Гидросфера'))
+question_list.append(Question('Кто предложил термин «экология»?', 'Э.Геккель', 'Аристотель', ' Ч.Дарвин', ' В.И.Вернадский'))
+question_list.append(Question('Все факторы живой и неживой природы, воздействующие на особи, популяции, виды, называют?', 'экологическими', 'биотическими', 'абиотическими', 'антропогенными'))
+question_list.append(Question('Понятие «биогеоценоз» ввел?', 'В.Сукачев', 'B.Вернадский', 'Аристотель', 'B.Докучаев'))
+question_list.append(Question('Минерализуют органические вещества других организмов?', 'редуценты', 'консументы 1-го порядка', 'консументы 2-го порядка', 'продуценты'))
+question_list.append(Question('Понятие «экосистема» вел в экологию?', ' А.Тенсли', 'Э.Зюсс', 'В.Сукачев', 'В.Вернадский'))
+question_list.append(Question('Изменения во внешней среде приводят к различным изменениям в популяции, но не влияют?', 'смертность особей которых очень велика', 'хорошо обеспеченными пищевыми ресурсами', 'которые занимают обширный ареал', 'потомство которых проходит стадию личинки'))
+question_list.append(Question('Какие существуют виды адаптации организмов?', 'Морфологические, этологические, физиологические', 'Правовые свойства организмов', 'Только морфологические виды', 'Только физиологические виды'))
+question_list.append(Question('Какая наука изучает характер и поведение животных?', 'Этология', 'Биология', 'Зоология', 'Экология'))
+
+def check_answer():
+    if answers[0].isChecked():
+        show_correct('Правильно')
+        window.score += 1
+        print('Статистика\n-Всего вопросов: ', window.total, '\n-Правильных ответов: ', window.score)
+        print('Рейтинг:', (window.score / window.total * 100), '%')
+    else:
+        if answers[1].isChecked() or answers[2].isChecked() or answers[3].isChecked():
+            show_correct('Неверно! Правильный ответ:')
+
+def next_question():
+    window.total += 1
+    print('Статистика\n-Всего вопросов: ', window.total, '\n-Правильных ответов: ', window.score)
+    cur_question = randint(0, len(question_list) - 1)
+
+    q = question_list[cur_question]
+    ask(q)
+
+def click_ok():
+    if btn_OK.text() == 'Ответить':
+        check_answer()
+    else:
+        next_question()
+
+def show_correct(res):
+    lb_Result.setText(res)
+    show_result()
+
+window = QWidget()
+window.setLayout(layout_card)
+window.setWindowTitle('Memo Card')
+#window.setWindowIcon(QtGui.QIcon('лого.png'))
+
+btn_OK.clicked.connect(click_ok)
+
+window.score = 0
+window.total = 0
+
+next_question()
+window.resize(400, 300)
+window.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+
+exit_test = Exit_btn(window,win)
+exit_test.setText('Назад')
+layout_card.addWidget(exit_test)
+exit_test.clicked.connect(exit_test.change)
+
+def change_win_test(): 
+    win.hide() 
+    window.show() 
+ 
+#===Novosti===
+second_win = QWidget()#второе окно начало
+second_win.resize(400, 300)
+second_win.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+second_win.hide()
+
+btn1_2 = QPushButton('Загрязнение воздуха')
+btn2_2 = QPushButton('загрязнение водной среды')
+btn3_2 = QPushButton('загрязнение природы')
+btn_back_2 = QPushButton('Назад')
+
+main_layout_2 = QVBoxLayout()
+layout1_2 = QHBoxLayout()
+layout2_2 = QHBoxLayout()
+
+second_win.setLayout(main_layout_2)
+main_layout_2.addLayout(layout1_2)
+main_layout_2.addLayout(layout2_2)
+layout1_2.addWidget(btn1_2)
+layout1_2.addWidget(btn2_2)
+layout2_2.addWidget(btn3_2)
+main_layout_2.addWidget(btn_back_2)#второе окно конец
+
+
+second_first_win = QWidget()#первое окно во втором окне начало
+second_first_win.resize(400, 300)
+second_first_win.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+second_first_win.hide()
+
+
+main_layout_2_1 = QVBoxLayout()
+layout1_2_1 = QHBoxLayout()
+layout2_2_1 = QHBoxLayout()
+
+btn1_2_1 = QPushButton('заводы')
+btn2_2_1 = QPushButton('добыча ресурсов')
+btn3_2_1 = QPushButton('транспорт')
+btn4_2_1 = QPushButton('АЭС')
+btn_back_2_1 = QPushButton('Назад')
+
+second_first_win.setLayout(main_layout_2_1)
+
+main_layout_2_1.addLayout(layout1_2_1)
+main_layout_2_1.addLayout(layout2_2_1)
+layout1_2_1.addWidget(btn1_2_1)
+layout1_2_1.addWidget(btn2_2_1)
+layout2_2_1.addWidget(btn3_2_1)
+layout2_2_1.addWidget(btn4_2_1)
+main_layout_2_1.addWidget(btn_back_2_1)#первое окно во втором окне конец
+
+
+second_second_win = QWidget()#второе окно во втором окне начало
+second_second_win.resize(400, 300)
+second_second_win.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+second_second_win.hide()
+
+main_layout_2_2 = QVBoxLayout()
+layout1_2_2 = QHBoxLayout()
+layout2_2_2 = QHBoxLayout()
+
+btn1_2_2 = QPushButton('корабли')
+btn2_2_2 = QPushButton('нефть')
+btn3_2_2 = QPushButton('отходы')
+btn_back_2_2 = QPushButton('Назад')
+
+
+second_second_win.setLayout(main_layout_2_2)
+main_layout_2_2.addLayout(layout1_2_2)
+main_layout_2_2.addLayout(layout2_2_2)
+layout1_2_2.addWidget(btn1_2_2)
+layout1_2_2.addWidget(btn2_2_2)
+layout2_2_2.addWidget(btn3_2_2)
+main_layout_2_2.addWidget(btn_back_2_2)#второе окно во втором окне конец
+
+
+second_third_win = QWidget()#треть окно во втором окне начало
+second_third_win.resize(400, 300)
+second_third_win.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+second_third_win.hide()
+
+main_layout_2_3 = QVBoxLayout()
+layout1_2_3 = QHBoxLayout()
+layout2_2_3 = QHBoxLayout()
+
+btn1_2_3 = QPushButton('корабли')
+btn2_2_3 = QPushButton('нефть')
+btn3_2_3 = QPushButton('отходы')
+btn_back_2_3 = QPushButton('Назад')
+
+
+second_third_win.setLayout(main_layout_2_3)
+main_layout_2_3.addLayout(layout1_2_3)
+main_layout_2_3.addLayout(layout2_2_3)
+layout1_2_3.addWidget(btn1_2_3)
+layout1_2_3.addWidget(btn2_2_3)
+layout2_2_3.addWidget(btn3_2_3)
+main_layout_2_3.addWidget(btn_back_2_3)#третье окно во втором окне конец
+
+#tair
+win_1_1_1_1 = QWidget()
+
+
+main_layout_1_1_1_1 = QVBoxLayout()
+layout_1_1_1_1 = QHBoxLayout()
+win_1_1_1_1.setLayout(main_layout_1_1_1_1)
+win_1_1_1_1.resize(1000, 800)
+
+nov=QPixmap('nov.jpg')
+lbl_nov = QLabel() 
+lbl_nov.setPixmap(nov) 
+main_layout_1_1_1_1.addWidget(lbl_nov)
+
+main_layout_1_1_1_1.addLayout(layout_1_1_1_1)
+
+win_1_1_1_1_exit = Exit_btn(win_1_1_1_1,second_first_win)
+win_1_1_1_1_exit.setText('Назад')
+layout_1_1_1_1.addWidget(win_1_1_1_1_exit)
+win_1_1_1_1_exit.clicked.connect(win_1_1_1_1_exit.change)
+
+win_1_1_1_1_exit_main = Exit_btn(win_1_1_1_1,win)
+win_1_1_1_1_exit_main.setText('В главное меню')
+layout_1_1_1_1.addWidget(win_1_1_1_1_exit_main)
+win_1_1_1_1_exit_main.clicked.connect(win_1_1_1_1_exit_main.change)
+
+
+
+win_1_1_1_2 = QWidget()
+main_layout_1_1_1_2 = QVBoxLayout()
+layout_1_1_1_2 = QHBoxLayout()
+win_1_1_1_2.setLayout(main_layout_1_1_1_2)
+
+nov2=QPixmap('nov(4).jpg')
+lbl_nov2 = QLabel() 
+lbl_nov2.setPixmap(nov2) 
+main_layout_1_1_1_2.addWidget(lbl_nov2)
+
+main_layout_1_1_1_2.addLayout(layout_1_1_1_2)
+
+win_1_1_1_2_exit = Exit_btn(win_1_1_1_2,second_first_win)
+win_1_1_1_2_exit.setText('Назад')
+layout_1_1_1_2.addWidget(win_1_1_1_2_exit)
+win_1_1_1_2_exit.clicked.connect(win_1_1_1_2_exit.change)
+
+win_1_1_1_2_exit_main = Exit_btn(win_1_1_1_2,win)
+win_1_1_1_2_exit_main.setText('В главное меню')
+layout_1_1_1_2.addWidget(win_1_1_1_2_exit_main)
+win_1_1_1_2_exit_main.clicked.connect(win_1_1_1_2_exit_main.change)
+
+win_1_1_1_3 = QWidget()
+main_layout_1_1_1_3 = QVBoxLayout()
+layout_1_1_1_3 = QHBoxLayout()
+win_1_1_1_3.setLayout(main_layout_1_1_1_3)
+
+nov3=QPixmap('nov(2).jpg')
+lbl_nov3 = QLabel() 
+lbl_nov3.setPixmap(nov3) 
+main_layout_1_1_1_3.addWidget(lbl_nov3)
+
+main_layout_1_1_1_3.addLayout(layout_1_1_1_3)
+
+win_1_1_1_3_exit = Exit_btn(win_1_1_1_3,second_first_win)
+win_1_1_1_3_exit.setText('Назад')
+layout_1_1_1_3.addWidget(win_1_1_1_3_exit)
+win_1_1_1_3_exit.clicked.connect(win_1_1_1_3_exit.change)
+
+win_1_1_1_3_exit_main = Exit_btn(win_1_1_1_3,win)
+win_1_1_1_3_exit_main.setText('В главное меню')
+layout_1_1_1_3.addWidget(win_1_1_1_3_exit_main)
+win_1_1_1_3_exit_main.clicked.connect(win_1_1_1_3_exit_main.change)
+
+win_1_1_1_4 = QWidget()
+main_layout_1_1_1_4 = QVBoxLayout()
+layout_1_1_1_4 = QHBoxLayout()
+win_1_1_1_4.setLayout(main_layout_1_1_1_4)
+
+nov4=QPixmap('nov(3).jpg')
+lbl_nov4 = QLabel() 
+lbl_nov4.setPixmap(nov4) 
+main_layout_1_1_1_4.addWidget(lbl_nov4)
+
+main_layout_1_1_1_4.addLayout(layout_1_1_1_4)
+
+win_1_1_1_4_exit = Exit_btn(win_1_1_1_4,second_first_win)
+win_1_1_1_4_exit.setText('Назад')
+layout_1_1_1_4.addWidget(win_1_1_1_4_exit)
+win_1_1_1_4_exit.clicked.connect(win_1_1_1_4_exit.change)
+
+win_1_1_1_4_exit_main = Exit_btn(win_1_1_1_4,win)
+win_1_1_1_4_exit_main.setText('В главное меню')
+layout_1_1_1_4.addWidget(win_1_1_1_4_exit_main)
+win_1_1_1_4_exit_main.clicked.connect(win_1_1_1_4_exit_main.change)
+
+win_1_1_2_1 = QWidget()
+main_layout_1_1_2_1 = QVBoxLayout()
+layout_1_1_2_1 = QHBoxLayout()
+win_1_1_2_1.setLayout(main_layout_1_1_2_1)
+
+nov5=QPixmap('Снимок экрана (2).png')
+lbl_nov5 = QLabel() 
+lbl_nov5.setPixmap(nov5) 
+main_layout_1_1_2_1.addWidget(lbl_nov5)
+
+main_layout_1_1_2_1.addLayout(layout_1_1_2_1)
+
+win_1_1_2_1_exit = Exit_btn(win_1_1_2_1,second_second_win)
+win_1_1_2_1_exit.setText('Назад')
+layout_1_1_2_1.addWidget(win_1_1_2_1_exit)
+win_1_1_2_1_exit.clicked.connect(win_1_1_2_1_exit.change)
+
+win_1_1_2_1_exit_main = Exit_btn(win_1_1_2_1,win)
+win_1_1_2_1_exit_main.setText('В главное меню')
+layout_1_1_2_1.addWidget(win_1_1_2_1_exit_main)
+win_1_1_2_1_exit_main.clicked.connect(win_1_1_2_1_exit_main.change)
+
+win_1_1_2_2 = QWidget()
+win_1_1_2_2.hide()
+main_layout_1_1_2_2 = QVBoxLayout()
+layout_1_1_2_2 = QHBoxLayout()
+win_1_1_2_2.setLayout(main_layout_1_1_2_2)
+
+nov6=QPixmap('Снимок экрана (4).png')
+lbl_nov6 = QLabel() 
+lbl_nov6.setPixmap(nov6) 
+main_layout_1_1_2_2.addWidget(lbl_nov6)
+
+main_layout_1_1_2_2.addLayout(layout_1_1_2_2)
+
+win_1_1_2_2_exit = Exit_btn(win_1_1_2_2,second_second_win)
+win_1_1_2_2_exit.setText('Назад')
+layout_1_1_2_2.addWidget(win_1_1_2_2_exit)
+win_1_1_2_2_exit.clicked.connect(win_1_1_2_2_exit.change)
+
+win_1_1_2_2_exit_main = Exit_btn(win_1_1_2_2,win)
+win_1_1_2_2_exit_main.setText('В главное меню')
+layout_1_1_2_2.addWidget(win_1_1_2_2_exit_main)
+win_1_1_2_2_exit_main.clicked.connect(win_1_1_2_2_exit_main.change)
+
+win_1_1_2_3 = QWidget()
+win_1_1_2_3.hide()
+main_layout_1_1_2_3 = QVBoxLayout()
+layout_1_1_2_3 = QHBoxLayout()
+win_1_1_2_3.setLayout(main_layout_1_1_2_3)
+
+nov7=QPixmap('nov(voda.1).jpg')
+lbl_nov7 = QLabel() 
+lbl_nov7.setPixmap(nov7) 
+main_layout_1_1_2_3.addWidget(lbl_nov7)
+
+main_layout_1_1_2_3.addLayout(layout_1_1_2_3)
+
+win_1_1_2_3_exit = Exit_btn(win_1_1_2_3,second_second_win)
+win_1_1_2_3_exit.setText('Назад')
+layout_1_1_2_3.addWidget(win_1_1_2_3_exit)
+win_1_1_2_3_exit.clicked.connect(win_1_1_2_3_exit.change)
+
+win_1_1_2_3_exit_main = Exit_btn(win_1_1_2_3,win)
+win_1_1_2_3_exit_main.setText('В главное меню')
+layout_1_1_2_3.addWidget(win_1_1_2_3_exit_main)
+win_1_1_2_3_exit_main.clicked.connect(win_1_1_2_3_exit_main.change)
+
+win_1_1_3_1 = QWidget()
+win_1_1_3_1.hide()
+main_layout_1_1_3_1 = QVBoxLayout()
+layout_1_1_3_1 = QHBoxLayout()
+win_1_1_3_1.setLayout(main_layout_1_1_3_1)
+
+nov8=QPixmap('nov(priroda.3).jpg')
+lbl_nov8 = QLabel() 
+lbl_nov8.setPixmap(nov8) 
+main_layout_1_1_3_1.addWidget(lbl_nov8)
+
+main_layout_1_1_3_1.addLayout(layout_1_1_3_1)
+
+win_1_1_3_1_exit = Exit_btn(win_1_1_3_1,second_second_win)
+win_1_1_3_1_exit.setText('Назад')
+layout_1_1_3_1.addWidget(win_1_1_3_1_exit)
+win_1_1_3_1_exit.clicked.connect(win_1_1_3_1_exit.change)
+
+win_1_1_3_1_exit_main = Exit_btn(win_1_1_3_1,win)
+win_1_1_3_1_exit_main.setText('В главное меню')
+layout_1_1_3_1.addWidget(win_1_1_3_1_exit_main)
+win_1_1_3_1_exit_main.clicked.connect(win_1_1_3_1_exit_main.change)
+
+win_1_1_3_2 = QWidget()
+win_1_1_3_2.hide()
+main_layout_1_1_3_2 = QVBoxLayout()
+layout_1_1_3_2 = QHBoxLayout()
+win_1_1_3_2.setLayout(main_layout_1_1_3_2)
+
+nov9=QPixmap('nov(priroda.1).jpg')
+lbl_nov9 = QLabel() 
+lbl_nov9.setPixmap(nov9) 
+main_layout_1_1_3_2.addWidget(lbl_nov9)
+
+main_layout_1_1_3_2.addLayout(layout_1_1_3_2)
+
+win_1_1_3_2_exit = Exit_btn(win_1_1_3_2,second_second_win)
+win_1_1_3_2_exit.setText('Назад')
+layout_1_1_3_2.addWidget(win_1_1_3_2_exit)
+win_1_1_3_2_exit.clicked.connect(win_1_1_3_2_exit.change)
+
+win_1_1_3_2_exit_main = Exit_btn(win_1_1_3_2,win)
+win_1_1_3_2_exit_main.setText('В главное меню')
+layout_1_1_3_2.addWidget(win_1_1_3_2_exit_main)
+win_1_1_3_2_exit_main.clicked.connect(win_1_1_3_2_exit_main.change)
+
+
+win_1_1_3_3 = QWidget()
+win_1_1_3_3.hide()
+main_layout_1_1_3_3 = QVBoxLayout()
+layout_1_1_3_3 = QHBoxLayout()
+win_1_1_3_3.setLayout(main_layout_1_1_3_3)
+
+nov10=QPixmap('nov(priroda.1).jpg')
+lbl_nov10 = QLabel() 
+lbl_nov10.setPixmap(nov10) 
+main_layout_1_1_3_3.addWidget(lbl_nov10)
+
+main_layout_1_1_3_3.addLayout(layout_1_1_3_3)
+
+win_1_1_3_3_exit = Exit_btn(win_1_1_3_3,second_second_win)
+win_1_1_3_3_exit.setText('Назад')
+layout_1_1_3_3.addWidget(win_1_1_3_3_exit)
+win_1_1_3_3_exit.clicked.connect(win_1_1_3_3_exit.change)
+
+win_1_1_3_3_exit_main = Exit_btn(win_1_1_3_3,win)
+win_1_1_3_3_exit_main.setText('В главное меню')
+layout_1_1_3_3.addWidget(win_1_1_3_3_exit_main)
+win_1_1_3_3_exit_main.clicked.connect(win_1_1_3_3_exit_main.change)
+
+def second_show():
+    second_win.show()
+    win.hide()
+
+def second_hide():
+    second_win.hide()
+    win.show()
+
+def second_first_show():
+    second_first_win.show()
+    second_win.hide()
+
+def second_first_hide():
+    second_first_win.hide()
+    second_win.show()
+
+def second_second_show():
+    second_second_win.show()
+    second_win.hide()
+
+def second_second_hide():
+    second_second_win.hide()
+    second_win.show()
+
+def second_third_show():
+    second_third_win.show()
+    second_win.hide()
+
+def second_third_hide():
+    second_third_win.hide()
+    second_win.show()
+
+
+def win_1_1_1_1_show():
+    win_1_1_1_1.show()
+    second_first_win.hide()
+
+def win_1_1_1_2_show():
+    win_1_1_1_2.show()
+    second_first_win.hide()
+
+def win_1_1_1_3_show():
+    win_1_1_1_3.show()
+    second_first_win.hide()
+
+def win_1_1_1_4_show():
+    win_1_1_1_4.show()
+    second_first_win.hide()
+
+
+def win_1_1_2_1_show():
+    win_1_1_2_1.show()
+    second_second_win.hide()
+
+def win_1_1_2_2_show():
+    win_1_1_2_2.show()
+    second_second_win.hide()
+
+def win_1_1_2_3_show():
+    win_1_1_2_3.show()
+    second_second_win.hide()
+
+
+def win_1_1_3_1_show():
+    win_1_1_3_1.show()
+    second_third_win.hide()
+
+def win_1_1_3_2_show():
+    win_1_1_3_2.show()
+    second_third_win.hide()
+
+def win_1_1_3_3_show():
+    win_1_1_3_3.show()
+    second_third_win.hide()
+
+
+btn_info.clicked.connect(second_show)
+
+btn_back_2.clicked.connect(second_hide)
+
+btn1_2.clicked.connect(second_first_show)
+
+btn_back_2_1.clicked.connect(second_first_hide)
+
+btn2_2.clicked.connect(second_second_show)
+
+btn_back_2_2.clicked.connect(second_second_hide)
+
+btn3_2.clicked.connect(second_third_show)
+
+btn_back_2_3.clicked.connect(second_third_hide)
+
+
+btn1_2_1.clicked.connect(win_1_1_1_1_show)
+
+btn2_2_1.clicked.connect(win_1_1_1_2_show)
+
+btn3_2_1.clicked.connect(win_1_1_1_3_show)
+
+btn4_2_1.clicked.connect(win_1_1_1_4_show)
+
+
+btn1_2_2.clicked.connect(win_1_1_2_1_show)
+
+btn2_2_2.clicked.connect(win_1_1_2_2_show)
+
+btn3_2_2.clicked.connect(win_1_1_2_3_show)
+
+
+btn1_2_3.clicked.connect(win_1_1_3_1_show)
+
+btn2_2_3.clicked.connect(win_1_1_3_2_show)
+
+btn3_2_3.clicked.connect(win_1_1_3_3_show)
+
+#===Novost(end)===
+
+ #===Reg===
+win_reg=QWidget()
+win_reg.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+win_reg.resize(400, 300)
+reg_lay_h1 = QHBoxLayout()
+reg_lay_h2=QHBoxLayout()
+reg_lay=QVBoxLayout()
+
+pix_rub = QPixmap("rub.png") 
+lbl_rub = QLabel() 
+lbl_rub.setPixmap(pix_rub) 
+
+pix_anim = QPixmap('anim.png')
+lbl_anim = QLabel()
+lbl_anim.setPixmap(pix_anim)
+
+I=1
+rubbish=[]
+animals=[]
+lbl_help=QLabel('Помощь')
+btn_anim=QPushButton('Помощь животным')
+btn_rub=QPushButton('Уборка мусора')
+
+win_reg.setLayout(reg_lay)
+reg_lay.addWidget(lbl_help)
+
+reg_lay.addLayout(reg_lay_h1)
+reg_lay.addLayout(reg_lay_h2)
+
+reg_lay_h1.addWidget(lbl_rub)
+reg_lay_h1.addWidget(lbl_anim)
+reg_lay_h2.addWidget(btn_rub)
+reg_lay_h2.addWidget(btn_anim)
+
+registered=QMessageBox()
+registered.setWindowTitle('Помощь')
+registered.setText('Вы успешно зарегистрированы!')
+
+error=QMessageBox()
+error.setWindowTitle('Ошибка')
+error.setText('Вы уже зарегистрированы!')
+
+# btn_exit=QPushButton()
+
+
+
+def change_win_reg(): 
+    win.hide() 
+    win_reg.show() 
+
+def show_reg_rub():
+    if I in rubbish:
+        error.show()
+    else:
+        rubbish.append(I)
+        registered.show()
+
+def show_reg_anim():
+    if I in animals:
+        error.show()
+    else:
+        animals.append(I)
+        registered.show()
+
+win_reg.resize(600, 400)
+
+exit_reg = Exit_btn(win_reg,win)
+exit_reg.setText('Назад')
+reg_lay.addWidget(exit_reg)
+exit_reg.clicked.connect(exit_reg.change)
+#===Reg(end)===
+
+#===Autors===
+win_1 = QWidget()
+win_1.resize(400, 300)
+win_1.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+btn_donate=QPushButton('Донат ;)') 
+
+pix_donate=QPixmap('m.png')
+lbl = QLabel()
+lbl.setPixmap(pix_donate) 
+
+v_layout = QVBoxLayout() 
+v_layout.addWidget(lbl) 
+v_layout.addWidget(btn_donate) 
+win_1.setLayout(v_layout) 
+
+
+win_donate = QWidget()
+win_donate.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+win_donate.resize(400,300)
+
+summa = QSpinBox()
+summa.setMaximum(999999999)
+summa.setStyleSheet('width: 70px;'
+    'height: 30px;')   
+summa.setAlignment(Qt.AlignCenter)
+
+txt_lbl = QLabel('Введите сумму для доната ♥')
+txt_lbl.setAlignment(Qt.AlignCenter)
+
+card_lbl = QLabel('1111 2222 3333 4444')
+card_lbl.setAlignment(Qt.AlignCenter)
+w_d_l = QVBoxLayout()
+win_donate.setLayout(w_d_l)
+w_d_l.addWidget(card_lbl)
+w_d_l.addWidget(txt_lbl)
+w_d_l.addWidget(summa)
+
+
+import webbrowser
+button = QPushButton('Отправить деньги')
+button.clicked.connect(lambda:webbrowser.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ'))
+
+w_d_l.addWidget(button)
+
+exit_authors = Exit_btn(win_1,win)
+exit_authors.setText('Назад')
+v_layout.addWidget(exit_authors)
+exit_authors.clicked.connect(exit_authors.change)
+
+exit_donate = Exit_btn(win_donate,win_1)
+exit_donate.setText('Назад')
+w_d_l.addWidget(exit_donate)
+exit_donate.clicked.connect(exit_donate.change)
+
+
+def change_win_donate(): 
+    win_1.hide() 
+    win_donate.show() 
+
+#===Autors(end)===
+
+def change_win_autors(): 
+    win.hide() 
+    win_1.show() 
+
+win.show() 
+
+btn_donate.clicked.connect(change_win_donate)
+btn_autors.clicked.connect(change_win_autors)
+btn_anim.clicked.connect(show_reg_anim)
+btn_rub.clicked.connect(show_reg_rub)
+btn_test.clicked.connect(change_win_test) 
+btn_reg.clicked.connect(change_win_reg) 
+app.exec_()
