@@ -1,0 +1,89 @@
+win_1_1_1_1 = QWidget()
+win_1_1_1_1.hide()
+main_layout_1_1_1_1 = QVBoxLayout()
+layout_1_1_1_1 = QHBoxLayout
+win_1_1_1_1.setLayout(main_layout_1_1_1_1)
+win_1_1_1_1.resize(1000, 800)
+win_1_1_1_1.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+
+win_1_1_1_1_exit = Exit_btn(win_1_1_1_1,second_first_win)
+win_1_1_1_1_exit.setText('Назад')
+main_layout_1_1_1_1.addWidget(win_1_1_1_1_exit)
+win_1_1_1_1_exit.clicked.connect(win_1_1_1_1_exit.change)
+
+win_1_1_1_1_exit_main = Exit_btn(win_1_1_1_1,win)
+win_1_1_1_1_exit_main.setText('В главное меню')
+main_layout_1_1_1_1.addWidget(win_1_1_1_1_exit_main)
+win_1_1_1_1_exit_main.clicked.connect(win_1_1_1_1_exit_main.change)
+
+
+
+win_1_1_1_2 = QWidget()
+win_1_1_1_2.hide()
+main_layout_1_1_1_2 = QVBoxLayout()
+layout_1_1_1_2 = QHBoxLayout
+win_1_1_1_2.setLayout(main_layout_1_1_1_2)
+win_1_1_1_2.resize(1000, 800)
+win_1_1_1_2.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+
+win_1_1_1_2_exit = Exit_btn(win_1_1_1_2,second_first_win)
+win_1_1_1_2_exit.setText('Назад')
+main_layout_1_1_1_2.addWidget(win_1_1_1_2_exit)
+win_1_1_1_2_exit.clicked.connect(win_1_1_1_2_exit.change)
+
+win_1_1_1_2_exit_main = Exit_btn(win_1_1_1_2,win)
+win_1_1_1_2_exit_main.setText('В главное меню')
+main_layout_1_1_1_2.addWidget(win_1_1_1_2_exit_main)
+win_1_1_1_2_exit_main.clicked.connect(win_1_1_1_2_exit_main.change)
+
+
+
+win_1_1_1_3 = QWidget()
+win_1_1_1_3.hide()
+main_layout_1_1_1_3 = QVBoxLayout()
+layout_1_1_1_3 = QHBoxLayout
+win_1_1_1_3.setLayout(main_layout_1_1_1_3)
+win_1_1_1_3.resize(1000, 800)
+win_1_1_1_3.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+
+win_1_1_1_3_exit = Exit_btn(win_1_1_1_3,second_first_win)
+win_1_1_1_3_exit.setText('Назад')
+main_layout_1_1_1_3.addWidget(win_1_1_1_3_exit)
+win_1_1_1_3_exit.clicked.connect(win_1_1_1_3_exit.change)
+
+win_1_1_1_3_exit_main = Exit_btn(win_1_1_1_3,win)
+win_1_1_1_3_exit_main.setText('В главное меню')
+main_layout_1_1_1_3.addWidget(win_1_1_1_3_exit_main)
+win_1_1_1_3_exit_main.clicked.connect(win_1_1_1_3_exit_main.change)
+
+
+
+win_1_1_1_4 = QWidget()
+win_1_1_1_4.hide()
+main_layout_1_1_1_4 = QVBoxLayout()
+layout_1_1_1_4 = QHBoxLayout
+win_1_1_1_4.setLayout(main_layout_1_1_1_4)
+win_1_1_1_4.resize(1000, 800)
+win_1_1_1_4.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+
+win_1_1_1_4_exit = Exit_btn(win_1_1_1_4,second_first_win)
+win_1_1_1_4_exit.setText('Назад')
+main_layout_1_1_1_4.addWidget(win_1_1_1_4_exit)
+win_1_1_1_4_exit.clicked.connect(win_1_1_1_4_exit.change)
+
+win_1_1_1_4_exit_main = Exit_btn(win_1_1_1_4,win)
+win_1_1_1_4_exit_main.setText('В главное меню')
+main_layout_1_1_1_4.addWidget(win_1_1_1_4_exit_main)
+win_1_1_1_4_exit_main.clicked.connect(win_1_1_1_4_exit_main.change)
