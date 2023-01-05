@@ -1,0 +1,28 @@
+win_1_1_2_3 = QWidget()
+win_1_1_2_3.hide()
+main_layout_1_1_2_3 = QVBoxLayout()
+layout_1_1_2_3 = QHBoxLayout
+win_1_1_2_3.setLayout(main_layout_1_1_2_1)
+win_1_1_2_3.resize(400, 300)
+win_1_1_2_3.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+# асад енд
+
+# тигран
+win_1_1_3_1 = QWidget()
+win_1_1_3_1.hide()
+main_layout_1_1_3_1 = QVBoxLayout()
+layout_1_1_3_1 = QHBoxLayout
+
+win_1_1_3_2 = QWidget()
+win_1_1_3_2.hide()
+main_layout_1_1_3_2 = QVBoxLayout()
+layout_1_1_3_2 = QHBoxLayout
+
+win_1_1_3_3 = QWidget()
+win_1_1_3_3.hide()
+main_layout_1_1_3_3 = QVBoxLayout()
+layout_1_1_3_3 = QHBoxLayout
+# тигран енд
