@@ -1,0 +1,43 @@
+win_1_1_1_1 = QWidget()
+win_1_1_1_1.hide()
+main_layout_1_1_1_1 = QVBoxLayout()
+layout_1_1_1_1 = QHBoxLayout
+win_1_1_1_1.setLayout(main_layout_1_1_1_1)
+win_1_1_1_1.resize(1000, 800)
+win_1_1_1_1.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+
+win_1_1_1_2 = QWidget()
+win_1_1_1_2.hide()
+main_layout_1_1_1_2 = QVBoxLayout()
+layout_1_1_1_2 = QHBoxLayout
+win_1_1_1_2.setLayout(main_layout_1_1_1_2)
+win_1_1_1_2.resize(1000, 800)
+win_1_1_1_2.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+
+win_1_1_1_3 = QWidget()
+win_1_1_1_3.hide()
+main_layout_1_1_1_3 = QVBoxLayout()
+layout_1_1_1_3 = QHBoxLayout
+win_1_1_1_3.setLayout(main_layout_1_1_1_3)
+win_1_1_1_3.resize(1000, 800)
+win_1_1_1_3.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
+
+win_1_1_1_4 = QWidget()
+win_1_1_1_4.hide()
+main_layout_1_1_1_4 = QVBoxLayout()
+layout_1_1_1_4 = QHBoxLayout
+win_1_1_1_4.setLayout(main_layout_1_1_1_4)
+win_1_1_1_4.resize(1000, 800)
+win_1_1_1_4.setStyleSheet(
+    'background-color:#87CEEB;'
+    'color: black;'
+    )
